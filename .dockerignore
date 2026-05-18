@@ -1,0 +1,31 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+.idea/
+.vscode/
+.DS_Store
+node_modules/
+staticfiles/
+media/
+coverage/
+
+# archivos de entorno
+.env
+.env.*
+
+# Ignorar archivos locales de Docker
+Dockerfile*
+.dockerignore

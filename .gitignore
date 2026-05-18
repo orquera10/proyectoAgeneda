@@ -1,0 +1,9 @@
+.venv/
+.tmp/
+__pycache__/
+*.py[cod]
+db.sqlite3
+runserver.out.log
+runserver.err.log
+.env
+sqlite_data.json

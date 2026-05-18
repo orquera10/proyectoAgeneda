@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Panel lector | Agenda</title>
+    <link rel="stylesheet" href="{% static 'core/css/auth.css' %}">
+</head>
+<body>
+    <main class="dashboard-page">
+        <section class="dashboard-panel">
+            <p class="eyebrow">Rol lector</p>
+            <h1>Bienvenido, {{ request.user.username }}</h1>
+            <p>Este será el espacio para consultar la agenda.</p>
+            <div class="actions">
+                <a class="button-link secondary-link" href="{% url 'agenda_list' %}">Ver agenda</a>
+            </div>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="secondary">Cerrar sesión</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

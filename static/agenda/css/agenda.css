@@ -1,0 +1,456 @@
+.agenda-navbar {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(23, 107, 135, 0.2);
+}
+
+.agenda-navbar .container-xxl,
+.agenda-page .container-xxl {
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 100%;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 200ms ease;
+}
+
+.navbar-brand:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.navbar-user {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.navbar-logout {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 200ms ease;
+}
+
+.navbar-logout:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.8);
+    color: #fff;
+}
+
+.agenda-page {
+    min-height: calc(100vh - 56px);
+    padding: 32px 0;
+    background:
+        radial-gradient(circle at top left, rgba(23, 107, 135, 0.10), transparent 32rem),
+        #f6f7f9;
+}
+
+.agenda-page .btn {
+    width: auto;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.agenda-page .btn-primary {
+    --bs-btn-bg: var(--primary);
+    --bs-btn-border-color: var(--primary);
+    --bs-btn-hover-bg: var(--primary-strong);
+    --bs-btn-hover-border-color: var(--primary-strong);
+}
+
+.agenda-hero {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 20px 60px rgba(31, 41, 51, 0.08);
+}
+
+.agenda-kicker {
+    color: var(--primary-strong);
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.display-title {
+    color: var(--text);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.activity-card,
+.form-card,
+.empty-state {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(31, 41, 51, 0.04);
+}
+
+.activity-card {
+    border-left-width: 6px;
+    border-left-style: solid;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+}
+
+.activity-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(23, 107, 135, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 250ms ease;
+}
+
+.activity-card:hover {
+    border-color: rgba(23, 107, 135, 0.25);
+    box-shadow: 0 8px 30px rgba(31, 41, 51, 0.08), 0 2px 8px rgba(31, 41, 51, 0.04) !important;
+    transform: translateY(-3px);
+}
+
+.activity-card:hover::before {
+    opacity: 1;
+}
+
+.activity-card-alta {
+    border-left-color: #dc3545;
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.04) 0%, #fff 40%);
+}
+
+.activity-card-alta:hover {
+    border-left-color: #bb2d3b;
+}
+
+.activity-card-media {
+    border-left-color: #fd7e14;
+    background: linear-gradient(135deg, rgba(253, 126, 20, 0.04) 0%, #fff 40%);
+}
+
+.activity-card-media:hover {
+    border-left-color: #e56c00;
+}
+
+.activity-card-baja {
+    border-left-color: #0dcaf0;
+    background: linear-gradient(135deg, rgba(13, 202, 240, 0.04) 0%, #fff 40%);
+}
+
+.activity-card-baja:hover {
+    border-left-color: #0aa2c0;
+}
+
+.activity-card-sin-prioridad {
+    border-left-color: #adb5bd;
+    background: #fff;
+}
+
+.activity-card-sin-prioridad:hover {
+    border-left-color: #6c757d;
+}
+
+/* Actividades realizadas - menor prioridad visual */
+.actividad-realizada {
+    opacity: 0.7;
+    border-left-color: #198754 !important;
+    background: linear-gradient(135deg, rgba(25, 135, 84, 0.08) 0%, rgba(25, 135, 84, 0.02) 100%);
+    position: relative;
+}
+
+/* Overlay pattern for completed items */
+.actividad-realizada::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(25, 135, 84, 0.03) 10px,
+        rgba(25, 135, 84, 0.03) 20px
+    );
+    pointer-events: none;
+}
+
+.actividad-realizada .activity-date-main {
+    color: #198754;
+    opacity: 0.8;
+}
+
+.actividad-realizada .activity-date-sub {
+    color: #6c757d;
+}
+
+.actividad-realizada .activity-title {
+    color: #6c757d;
+    opacity: 0.8;
+}
+
+.actividad-realizada .detail-label {
+    color: #adb5bd;
+}
+
+.actividad-realizada .detail-value,
+.actividad-realizada .activity-section p {
+    color: #6c757d;
+}
+
+.actividad-realizada:hover {
+    opacity: 0.9;
+    border-left-color: #146c43 !important;
+    box-shadow: 0 8px 30px rgba(25, 135, 84, 0.12), 0 2px 8px rgba(31, 41, 51, 0.04) !important;
+}
+
+.actividad-realizada:hover::after {
+    opacity: 0.5;
+}
+
+.activity-date-main {
+    color: var(--primary-strong);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
+    text-transform: capitalize;
+    letter-spacing: -0.5px;
+}
+
+.activity-date-sub {
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+}
+
+.priority-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.priority-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+}
+
+.priority-badge {
+    border-radius: 999px;
+    padding: 6px 14px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.priority-alta {
+    background: linear-gradient(135deg, #dc3545, #bb2d3b);
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.priority-media {
+    background: linear-gradient(135deg, #fd7e14, #e56c00);
+    box-shadow: 0 2px 8px rgba(253, 126, 20, 0.3);
+}
+
+.priority-baja {
+    background: linear-gradient(135deg, #0dcaf0, #0aa2c0);
+    box-shadow: 0 2px 8px rgba(13, 202, 240, 0.3);
+}
+
+.activity-title {
+    color: var(--text);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    letter-spacing: -0.2px;
+}
+
+.detail-label {
+    margin-bottom: 4px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value,
+.activity-section p {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.details-grid {
+    margin-top: 8px;
+}
+
+.activity-section {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: 24px;
+    padding-top: 20px;
+}
+
+.pagination-nav {
+    padding: 16px 0;
+}
+
+.pagination-nav .pagination {
+    gap: 4px;
+}
+
+.pagination-nav .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 200ms ease;
+    background: #fff;
+}
+
+.pagination-nav .page-link:hover {
+    background: rgba(23, 107, 135, 0.08);
+    border-color: rgba(23, 107, 135, 0.3);
+    color: var(--primary-strong);
+}
+
+.pagination-nav .page-item.active .page-link {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+    border-color: var(--primary-strong);
+    color: #fff;
+}
+
+.pagination-nav .page-item.disabled .page-link {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.pagination-nav .page-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+.agenda-page .form-label {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.agenda-page .form-control {
+    min-height: 44px;
+    border-radius: 8px;
+}
+
+.agenda-page textarea.form-control {
+    min-height: 112px;
+    resize: vertical;
+}
+
+@media (max-width: 575px) {
+    .agenda-page {
+        padding: 16px 0;
+    }
+
+    .agenda-hero {
+        padding: 20px;
+    }
+
+    .display-title {
+        font-size: 30px;
+    }
+
+    .navbar-user {
+        display: none;
+    }
+
+    .navbar-logout span {
+        display: none;
+    }
+
+    .navbar-logout {
+        padding: 8px 12px;
+    }
+
+    .agenda-navbar .container-xxl,
+    .agenda-page .container-xxl {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+    .agenda-navbar .container-xxl,
+    .agenda-page .container-xxl {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .agenda-navbar .container-xxl,
+    .agenda-page .container-xxl {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .agenda-navbar .container-xxl,
+    .agenda-page .container-xxl {
+        max-width: 1140px;
+    }
+}

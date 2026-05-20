@@ -276,11 +276,25 @@
     letter-spacing: -0.5px;
 }
 
-.activity-date-small {
+.activity-date-day {
+    color: var(--primary);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.activity-time {
     color: var(--muted);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
-    letter-spacing: -0.1px;
+}
+
+.actividad-realizada .activity-date-day {
+    color: #adb5bd;
+}
+
+.actividad-realizada .activity-time {
+    color: #6c757d;
 }
 
 .activity-date-sub {

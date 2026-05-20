@@ -69,21 +69,25 @@
                             <div class="card-body">
                                 <div class="d-flex flex-column gap-1">
                                     <div class="d-flex align-items-center justify-content-between gap-2">
-                                        <div class="activity-date-small">
-                                            {% if entrada.fecha %}
-                                                {{ entrada.fecha|date:"l j \\d\\e F" }}
-                                            {% elif entrada.mes %}
-                                                {{ entrada.get_mes_display }}
-                                            {% else %}
-                                                Fecha a definir
-                                            {% endif %}
-                                            {% if entrada.horario_inicio and entrada.horario_fin %}
-                                                &middot; de {{ entrada.horario_inicio|time:"H:i" }} a {{ entrada.horario_fin|time:"H:i" }} hs.
-                                            {% elif entrada.horario_inicio %}
-                                                &middot; a {{ entrada.horario_inicio|time:"H:i" }} hs.
-                                            {% else %}
-                                                &middot; Horario a definir
-                                            {% endif %}
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <span class="activity-date-day">
+                                                {% if entrada.fecha %}
+                                                    {{ entrada.fecha|date:"l j \\d\\e F" }}
+                                                {% elif entrada.mes %}
+                                                    {{ entrada.get_mes_display }}
+                                                {% else %}
+                                                    Fecha a definir
+                                                {% endif %}
+                                            </span>
+                                            <span class="activity-time">
+                                                {% if entrada.horario_inicio and entrada.horario_fin %}
+                                                    de {{ entrada.horario_inicio|time:"H:i" }} a {{ entrada.horario_fin|time:"H:i" }} hs.
+                                                {% elif entrada.horario_inicio %}
+                                                    a {{ entrada.horario_inicio|time:"H:i" }} hs.
+                                                {% else %}
+                                                    Horario a definir
+                                                {% endif %}
+                                            </span>
                                         </div>
                                         <div class="d-flex align-items-center gap-1">
                                             {% if entrada.prioridad_actividad %}

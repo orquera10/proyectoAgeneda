@@ -10,10 +10,10 @@ from .models import EntradaAgenda
 
 
 def is_editor(user):
-    return (
-        user.is_authenticated
-        and getattr(getattr(user, 'profile', None), 'role', None) == Profile.Role.EDITOR
-    )
+    try:
+        return user.is_authenticated and user.profile.role == Profile.Role.EDITOR
+    except (AttributeError, Profile.DoesNotExist):
+        return False
 
 
 @login_required

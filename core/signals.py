@@ -11,4 +11,7 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
         return
 
-    Profile.objects.get_or_create(user=instance)
+    try:
+        instance.profile
+    except Profile.DoesNotExist:
+        Profile.objects.create(user=instance)

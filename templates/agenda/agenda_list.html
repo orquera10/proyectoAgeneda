@@ -120,7 +120,7 @@
                         <div class="modal-dialog modal-lg modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="modalLabel-{{ entrada.pk }}">{{ entrada.nombre_actividad }}</h5>
+                                    <h5 class="modal-title" id="modalLabel-{{ entrada.pk }}"></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                                 </div>
                                 <div class="modal-body">
@@ -144,6 +144,10 @@
                                                     Horario a definir
                                                 {% endif %}
                                             </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <h6 class="activity-title fw-bold mb-3">{{ entrada.nombre_actividad }}</h6>
                                         </div>
 
                                         {% if entrada.localidad %}

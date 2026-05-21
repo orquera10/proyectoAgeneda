@@ -362,6 +362,14 @@
     letter-spacing: -0.2px;
 }
 
+.modal .activity-title {
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+}
+
 .actividad-realizada .activity-title-compact {
     color: #6c757d;
 }

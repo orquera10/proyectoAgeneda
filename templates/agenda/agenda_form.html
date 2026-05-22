@@ -10,6 +10,35 @@
     <link rel="stylesheet" href="{% static 'agenda/css/agenda.css' %}">
 </head>
 <body>
+    <nav class="agenda-navbar">
+        <div class="container-xxl">
+            <div class="navbar-content">
+                <a class="navbar-brand" href="{% url 'dashboard' %}">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="3" y1="9" x2="21" y2="9"/>
+                        <line x1="9" y1="21" x2="9" y2="9"/>
+                    </svg>
+                    <span>Agenda</span>
+                </a>
+                <div class="navbar-actions">
+                    <span class="navbar-user">{{ request.user.username }}</span>
+                    <form method="post" action="{% url 'logout' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-light btn-sm navbar-logout">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16 17 21 12 16 7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
     <main class="agenda-page">
         <div class="container-xl">
             <header class="agenda-hero d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-4">
@@ -23,41 +52,151 @@
 
             <section class="card shadow-sm form-card">
                 <div class="card-body p-4">
-                    <form method="post" class="row g-3" novalidate>
+                    <form method="post" class="needs-validation" novalidate>
                         {% csrf_token %}
 
-                        {% for field in form %}
-                            {% if field.field.widget.input_type == 'checkbox' %}
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h6 class="form-section-title mb-3">Actividad</h6>
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.nombre_actividad.id_for_label }}">{{ form.nombre_actividad.label }}</label>
+                                    {{ form.nombre_actividad }}
+                                    {% for error in form.nombre_actividad.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.prioridad_actividad.id_for_label }}">{{ form.prioridad_actividad.label }}</label>
+                                    {{ form.prioridad_actividad }}
+                                    {% for error in form.prioridad_actividad.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="form-section-title mb-3">Fecha y horario</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="{{ form.mes.id_for_label }}">{{ form.mes.label }}</label>
+                                        {{ form.mes }}
+                                        {% for error in form.mes.errors %}
+                                            <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="{{ form.dia.id_for_label }}">{{ form.dia.label }}</label>
+                                        {{ form.dia }}
+                                        {% for error in form.dia.errors %}
+                                            <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label d-block">&nbsp;</label>
+                                        <div class="form-text">{{ form.dia.help_text }}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="{{ form.horario_inicio.id_for_label }}">{{ form.horario_inicio.label }}</label>
+                                        {{ form.horario_inicio }}
+                                        <div class="form-text">{{ form.horario_inicio.help_text }}</div>
+                                        {% for error in form.horario_inicio.errors %}
+                                            <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="{{ form.horario_fin.id_for_label }}">{{ form.horario_fin.label }}</label>
+                                        {{ form.horario_fin }}
+                                        <div class="form-text">{{ form.horario_fin.help_text }}</div>
+                                        {% for error in form.horario_fin.errors %}
+                                            <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="form-section-title mb-3">Ubicación</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="{{ form.localidad.id_for_label }}">{{ form.localidad.label }}</label>
+                                        {{ form.localidad }}
+                                        {% for error in form.localidad.errors %}
+                                            <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="{{ form.lugar_actividad.id_for_label }}">{{ form.lugar_actividad.label }}</label>
+                                        {{ form.lugar_actividad }}
+                                        {% for error in form.lugar_actividad.errors %}
+                                            <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="form-section-title mb-3">Coordinación</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="{{ form.direccion_coordinacion.id_for_label }}">{{ form.direccion_coordinacion.label }}</label>
+                                        {{ form.direccion_coordinacion }}
+                                        {% for error in form.direccion_coordinacion.errors %}
+                                            <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="{{ form.poblacion_destinataria.id_for_label }}">{{ form.poblacion_destinataria.label }}</label>
+                                        {{ form.poblacion_destinataria }}
+                                        {% for error in form.poblacion_destinataria.errors %}
+                                            <div class="invalid-feedback d-block">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <h6 class="form-section-title mb-3">Detalles</h6>
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.objetivo.id_for_label }}">{{ form.objetivo.label }}</label>
+                                    {{ form.objetivo }}
+                                    {% for error in form.objetivo.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.requerimientos_comunicacion.id_for_label }}">{{ form.requerimientos_comunicacion.label }}</label>
+                                    {{ form.requerimientos_comunicacion }}
+                                    {% for error in form.requerimientos_comunicacion.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ form.informacion_brindada.id_for_label }}">{{ form.informacion_brindada.label }}</label>
+                                    {{ form.informacion_brindada }}
+                                    {% for error in form.informacion_brindada.errors %}
+                                        <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            {% if form.realizada %}
                                 <div class="col-12">
                                     <div class="form-check">
-                                        {{ field }}
-                                        <label class="form-check-label" for="{{ field.id_for_label }}">
-                                            {{ field.label }}
+                                        {{ form.realizada }}
+                                        <label class="form-check-label" for="{{ form.realizada.id_for_label }}">
+                                            {{ form.realizada.label }}
                                         </label>
+                                        <div class="form-text">{{ form.realizada.help_text }}</div>
                                     </div>
-                                    {% if field.help_text %}
-                                        <div class="form-text">{{ field.help_text }}</div>
-                                    {% endif %}
-                                    {% for error in field.errors %}
-                                        <div class="invalid-feedback d-block">{{ error }}</div>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                <div class="{% if field.field.widget.input_type == 'textarea' %}col-12{% elif field.name == 'mes' or field.name == 'dia' or field.name == 'horario_inicio' or field.name == 'horario_fin' %}col-md-3{% else %}col-md-6{% endif %}">
-                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                    {{ field }}
-                                    {% if field.help_text %}
-                                        <div class="form-text">{{ field.help_text }}</div>
-                                    {% endif %}
-                                    {% for error in field.errors %}
-                                        <div class="invalid-feedback d-block">{{ error }}</div>
-                                    {% endfor %}
                                 </div>
                             {% endif %}
-                        {% endfor %}
+                        </div>
 
-                        <div class="col-12 d-flex flex-column flex-sm-row justify-content-end gap-2 pt-2">
-                            <a class="btn btn-outline-secondary" href="{% url 'editor_dashboard' %}">Cancelar</a>
+                        <div class="col-12 d-flex flex-column flex-sm-row justify-content-end gap-2 pt-4 border-top mt-4">
+                            <a class="btn btn-outline-secondary" href="{% url 'agenda_list' %}">Cancelar</a>
                             <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
                         </div>
                     </form>

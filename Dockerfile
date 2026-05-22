@@ -2,12 +2,14 @@
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    TZ=America/Argentina/Buenos_Aires
 
 WORKDIR /app
 
 # Instala dependencias primero para aprovechar cache de Docker
 COPY requirements.txt ./
+RUN apt-get update && apt-get install -y --no-install-recommends tzdata && rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
 # Copia el resto del proyecto

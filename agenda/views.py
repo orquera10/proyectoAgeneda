@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.paginator import Paginator
+from django.db.models import F, Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 
 from core.models import Profile
 
@@ -18,18 +19,26 @@ def is_editor(user):
 
 @login_required
 def agenda_list(request):
-    # Order by realizada (non-completed first), then by date and id
-    entradas_list = EntradaAgenda.objects.select_related('creado_por').order_by('realizada', '-fecha', '-id')
-    paginator = Paginator(entradas_list, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    hoy = timezone.localdate()
+    entradas = (
+        EntradaAgenda.objects.select_related('creado_por')
+        .filter(
+            Q(fecha__year=hoy.year, fecha__month=hoy.month)
+            | Q(fecha__isnull=True, mes=hoy.month)
+        )
+        .order_by(
+            'realizada',
+            F('fecha').asc(nulls_last=True),
+            F('horario_inicio').asc(nulls_last=True),
+            'id',
+        )
+    )
 
     return render(
         request,
         'agenda/agenda_list.html',
         {
-            'entradas': page_obj,
-            'page_obj': page_obj,
+            'entradas': entradas,
             'can_create': is_editor(request.user),
         },
     )

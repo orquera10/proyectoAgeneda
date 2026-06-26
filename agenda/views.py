@@ -20,11 +20,19 @@ def is_editor(user):
 @login_required
 def agenda_list(request):
     hoy = timezone.localdate()
+    try:
+        selected_mes = int(request.GET.get('mes', hoy.month))
+    except (TypeError, ValueError):
+        selected_mes = hoy.month
+
+    if selected_mes not in EntradaAgenda.Mes.values:
+        selected_mes = hoy.month
+
     entradas = (
         EntradaAgenda.objects.select_related('creado_por')
         .filter(
-            Q(fecha__year=hoy.year, fecha__month=hoy.month)
-            | Q(fecha__isnull=True, mes=hoy.month)
+            Q(fecha__year=hoy.year, fecha__month=selected_mes)
+            | Q(fecha__isnull=True, mes=selected_mes)
         )
         .order_by(
             'realizada',
@@ -40,6 +48,8 @@ def agenda_list(request):
         {
             'entradas': entradas,
             'can_create': is_editor(request.user),
+            'month_choices': EntradaAgenda.Mes.choices,
+            'selected_mes': selected_mes,
         },
     )
 
@@ -111,4 +121,5 @@ def agenda_toggle_realizada(request, pk):
     else:
         messages.success(request, 'La entrada fue marcada como pendiente.')
     
-    return redirect('agenda_list')
+    next_url = request.POST.get('next') or 'agenda_list'
+    return redirect(next_url)

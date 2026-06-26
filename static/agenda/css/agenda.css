@@ -114,6 +114,22 @@
     line-height: 1.1;
 }
 
+.month-filter {
+    min-width: 220px;
+}
+
+.month-filter .form-label {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.month-filter .form-select {
+    min-height: 40px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
 .activity-card,
 .form-card,
 .empty-state {
@@ -541,6 +557,10 @@
 
     .agenda-hero {
         padding: 20px;
+    }
+
+    .month-filter {
+        width: 100%;
     }
 
     .display-title {

@@ -270,6 +270,13 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    {% if can_delete %}
+                                        <form method="post" action="{% url 'agenda_delete' entrada.pk %}" class="d-inline me-auto" onsubmit="return confirm('Eliminar esta entrada? Esta accion no se puede deshacer.');">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                            <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+                                        </form>
+                                    {% endif %}
                                     {% if can_create %}
                                         <form method="post" action="{% url 'agenda_toggle_realizada' entrada.pk %}" class="d-inline">
                                             {% csrf_token %}

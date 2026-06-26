@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import F, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.http import require_POST
 
 from core.models import Profile
 
@@ -15,6 +17,10 @@ def is_editor(user):
         return user.is_authenticated and user.profile.role == Profile.Role.EDITOR
     except (AttributeError, Profile.DoesNotExist):
         return False
+
+
+def is_staff(user):
+    return user.is_authenticated and user.is_staff
 
 
 @login_required
@@ -48,6 +54,7 @@ def agenda_list(request):
         {
             'entradas': entradas,
             'can_create': is_editor(request.user),
+            'can_delete': is_staff(request.user),
             'month_choices': EntradaAgenda.Mes.choices,
             'selected_mes': selected_mes,
         },
@@ -123,3 +130,22 @@ def agenda_toggle_realizada(request, pk):
     
     next_url = request.POST.get('next') or 'agenda_list'
     return redirect(next_url)
+
+
+@login_required
+@user_passes_test(is_staff, login_url='dashboard')
+@require_POST
+def agenda_delete(request, pk):
+    entrada = get_object_or_404(EntradaAgenda, pk=pk)
+    entrada.delete()
+    messages.success(request, 'La entrada fue eliminada.')
+
+    next_url = request.POST.get('next')
+    if next_url and url_has_allowed_host_and_scheme(
+        next_url,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        return redirect(next_url)
+
+    return redirect('agenda_list')
